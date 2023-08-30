@@ -18,15 +18,40 @@ from   imblearn.over_sampling  import RandomOverSampler       as ros
 from   collections             import Counter                 as ctr
 
 # %%
+#
+# Auxiliary functions
+#
 def printSeparator():
     w, h = shu.get_terminal_size()
-    print(fr.GREEN); print('_'* w,fr.WHITE)
-
-# %%
+    print(fr.GREEN + '-' * w + fr.WHITE)
+    
 def printStep(stepA, stepB):
     printSeparator()
-    print(fr.BLUE,stepA)
-    print(fr.YELLOW,stepB)
+    print(fr.BLUE   + stepA)
+    print(fr.YELLOW + stepB)
+    printSeparator()
+    
+def printDFinfo(name,dfName):
+    printSeparator()
+    print('Name: ',name)
+    printSeparator()
+    print(dfName.info())    
+    printSeparator()
+    print('Row Count :' + fr.RED)
+    print(dfName.count(),fr.WHITE)
+    printSeparator()
+    print(dfName.head())
+    printSeparator()
+    
+def printReport(reportName):
+    printSeparator()
+    print(fr.RED,'Classification Report',fr.WHITE)
+    print(reportName)
+    printSeparator()
+    
+def printBAS(basName):
+    printSeparator()
+    print(fr.WHITE + 'Balanced Accuracy Score : '+ fr.RED + str(basName))
     printSeparator()
 
 # %% [markdown]
@@ -38,10 +63,7 @@ def printStep(stepA, stepB):
 # Step 1.1: Read the `lending_data.csv` data from the `Resources` folder into a Pandas DataFrame.
 
 # %%
-printStep('1 - Preparation','')
-
-# %%
-printStep('1 - Preparation','1.1 - Read CSV file, create DF and show head')
+printStep('1 - Preparation','1.1 - Read CSV file, create DF and show head'                                          )
 
 # %%
 #
@@ -53,11 +75,8 @@ df_lending = pd.read_csv(pt('../Resources/lending_data.csv'))
 #
 # Review the DataFrame
 #
-printSeparator()
-print('Row Count :',fr.RED,df_lending.count()[0],fr.WHITE)
-print('')
-print(df_lending.head())
-printSeparator()
+printDFinfo('df_lending',df_lending)
+
 
 # %% [markdown]
 # Step 1.2: Create the labels set (`y`)  from the “loan_status” column, and then create the features (`X`) DataFrame from the remaining columns.
@@ -84,22 +103,14 @@ X = df_lending.drop(columns=['loan_status']);
 #
 # Review the y variable Series
 #
-printSeparator()
-print('Values fot Y :')
-print(fr.WHITE)
-print(y.head())
-printSeparator()
+
+printDFinfo('y',y)
 
 # %%
 #
 # Review the X variable DataFrame
 #
-printSeparator()
-
-print('Values of X :')
-print(fr.WHITE)
-print(X.head())
-printSeparator()
+printDFinfo('X',X)
 
 # %% [markdown]
 # Step 1.3: Check the balance of the labels variable (`y`) by using the `value_counts` function.
@@ -137,13 +148,11 @@ print('y_train Count          :',fr.RED,y_train.count(),fr.WHITE)
 print('X_test  Count          :',fr.RED,X_test.count()[0],fr.WHITE)
 print('y_test  Count          :',fr.RED,y_test.count(),fr.WHITE)
 print('X_train + X_test Count :',fr.RED,X_train.count()[0]+X_test.count()[0],fr.WHITE)
+print('y_train + y_test Count :',fr.RED,y_train.count()+y_test.count(),fr.WHITE)
 printSeparator()
 
 # %% [markdown]
 # Step 2. Create a Logistic Regression Model with the Original Data
-
-# %%
-printStep('2 - Logistic Regression','')
 
 # %%
 printStep('2 - Logistic Regression','2.1 - Create the Logistic Regression Model')
@@ -179,9 +188,7 @@ printStep('2 - Logistic Regression','2.2 - Make Predictions using the Testing Da
 
 test_predictions    = logistic_regression_model.predict(X_test)
 df_test_predictions = pd.DataFrame({'Predictions': test_predictions, 'Actual': y_test})
-printSeparator()
-print(df_test_predictions)
-printSeparator()
+printDFinfo('df_test_predictions',df_test_predictions)
 
 # %% [markdown]
 # Step 2.3: Evaluate the model’s performance by doing the following:
@@ -199,9 +206,8 @@ printStep('2 - Logistic Regression','2.3 Calculate, Generate, Print metrics for 
 #
 # Print the balanced_accuracy score of the model
 #
-printSeparator()
-print(f"The balanced accuracy score of the model is: {bas(y_test, test_predictions)}")
-printSeparator()
+printBAS(bas(y_test, test_predictions))
+
 
 # %%
 # 
@@ -220,10 +226,8 @@ printSeparator()
 #
 
 testing_report = csr(y_test, test_predictions);
-printSeparator()
-print(fr.RED,'Classification Report',fr.WHITE)
-print(testing_report)
-printSeparator()
+printReport(testing_report)
+
 
 # %% [markdown]
 # Step 2.4: Answer the following question.
@@ -234,7 +238,7 @@ printSeparator()
 
 # %%
 printStep('2 - Logistic Regression','2.4 - Qualify the Model')
-print('The logistic regression model was 95% accurate at predicting the healthy vs high-risk loan labels')
+print('The logistic regression model was'+ fr.RED +' 95% ' + fr.WHITE +'accurate at predicting the healthy vs high-risk loan labels')
 printSeparator()
 
 # %% [markdown]
@@ -245,7 +249,6 @@ printSeparator()
 # Step 3.1: Use the `RandomOverSampler` module from the imbalanced-learn library to resample the data. Be sure to confirm that the labels have an equal number of data points. 
 
 # %%
-printStep('3 - Logistic Regression Model with Resampled Training Data','')
 printStep('3 - Logistic Regression Model with Resampled Training Data','3.1 - Resample the training data with the RandomOversampler')
 
 # %%
@@ -260,7 +263,10 @@ ros = ros(random_state=1);
 # Fit the original training data to the random_oversampler model
 #
 
-X_ros_model, y_ros_model = ros.fit_resample(X,y);
+X_ros_model, y_ros_model = ros.fit_resample(X,y)
+
+printDFinfo('X_ros_model',X_ros_model)
+printDFinfo('y_ros_model',y_ros_model)
 
 # %%
 # 
@@ -298,10 +304,7 @@ classifier.fit(X_ros_model, y_ros_model)
 
 predictions    = classifier.predict(X_ros_model);
 df_predictions = pd.DataFrame({'Predictions': predictions, 'Actual': y_ros_model});
-printSeparator()
-print(df_predictions)
-printSeparator()
-
+printDFinfo('df_predictions',df_predictions)
 
 # %% [markdown]
 # Step 3.3: Evaluate the model’s performance by doing the following:
@@ -319,9 +322,8 @@ printStep('3 - Logistic Regression Model with Resampled Training Data','3.3 - Ca
 # 
 # Print the balanced_accuracy score of the model
 #
-printSeparator()
-print(f"The balanced accuracy score of the model is: {bas(y_ros_model, predictions)}")
-printSeparator()
+
+printBAS(bas(y_ros_model, predictions))
 
 # %%
 # Generate a confusion matrix for the model
@@ -334,10 +336,8 @@ printSeparator()
 # %%
 # Print the classification report for the model
 report = csr(y_ros_model, predictions)
-printSeparator()
-print(fr.RED,'Classification Report',fr.WHITE)
-print(report)
-printSeparator()
+printReport(report)
+
 
 # %% [markdown]
 # Step 3.4: Answer the following question
