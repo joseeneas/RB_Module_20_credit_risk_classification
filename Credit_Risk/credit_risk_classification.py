@@ -25,8 +25,8 @@ def printSeparator():
 # %%
 def printStep(stepA, stepB):
     printSeparator()
-    print(stepA)
-    print(stepB)
+    print(fr.BLUE,stepA)
+    print(fr.YELLOW,stepB)
     printSeparator()
 
 # %% [markdown]
@@ -38,10 +38,10 @@ def printStep(stepA, stepB):
 # Step 1.1: Read the `lending_data.csv` data from the `Resources` folder into a Pandas DataFrame.
 
 # %%
-printStep('1','')
+printStep('1 - Preparation','')
 
 # %%
-printStep('1','1.1')
+printStep('1 - Preparation','1.1 - Read CSV file, create DF and show head')
 
 # %%
 #
@@ -63,7 +63,7 @@ printSeparator()
 # Step 1.2: Create the labels set (`y`)  from the “loan_status” column, and then create the features (`X`) DataFrame from the remaining columns.
 
 # %%
-printStep('1','1.2')
+printStep('1 - Preparation','1.2 - Create labels X and y')
 
 # %%
 #
@@ -105,7 +105,7 @@ printSeparator()
 # Step 1.3: Check the balance of the labels variable (`y`) by using the `value_counts` function.
 
 # %%
-printStep('1','1.3')
+printStep('1 - Preparation','1.3 - Check Balance of y')
 
 # %%
 #
@@ -122,7 +122,7 @@ printSeparator()
 # Step 1.4: Split the data into training and testing datasets by using `train_test_split`.
 
 # %%
-printStep('1','1.4')
+printStep('1 - Preparation ','1.4 - Train Test Split')
 
 # %%
 #
@@ -143,10 +143,10 @@ printSeparator()
 # Step 2. Create a Logistic Regression Model with the Original Data
 
 # %%
-printStep('2','')
+printStep('2 - Logistic Regression','')
 
 # %%
-printStep('2','2.1')
+printStep('2 - Logistic Regression','2.1 - Create the Logistic Regression Model')
 
 # %% [markdown]
 # Step 2.1: Fit a logistic regression model by using the training data (`X_train` and `y_train`).
@@ -170,7 +170,7 @@ lr_model                  = logistic_regression_model.fit(X_train, y_train)
 # Step 2.2: Save the predictions on the testing data labels by using the testing feature data (`X_test`) and the fitted model.
 
 # %%
-printStep('2','2.2')
+printStep('2 - Logistic Regression','2.2 - Make Predictions using the Testing Data')
 
 # %%
 # 
@@ -193,7 +193,7 @@ printSeparator()
 # * Print the classification report.
 
 # %%
-printStep('2','2.3')
+printStep('2 - Logistic Regression','2.3 Calculate, Generate, Print metrics for the model')
 
 # %%
 #
@@ -233,7 +233,7 @@ printSeparator()
 # **Answer:** `The logistic regression model was 95% accurate at predicting the healthy vs high-risk loan labels`
 
 # %%
-printStep('2','2.4')
+printStep('2 - Logistic Regression','2.4 - Qualify the Model')
 print('The logistic regression model was 95% accurate at predicting the healthy vs high-risk loan labels')
 printSeparator()
 
@@ -245,8 +245,8 @@ printSeparator()
 # Step 3.1: Use the `RandomOverSampler` module from the imbalanced-learn library to resample the data. Be sure to confirm that the labels have an equal number of data points. 
 
 # %%
-printStep('3','')
-printStep('3','3.1')
+printStep('3 - Logistic Regression Model with Resampled Training Data','')
+printStep('3 - Logistic Regression Model with Resampled Training Data','3.1 - Resample the training data with the RandomOversampler')
 
 # %%
 #
@@ -276,7 +276,7 @@ printSeparator()
 # Step 3.2: Use the `LogisticRegression` classifier and the resampled data to fit the model and make predictions.
 
 # %%
-printStep('3','3.2')
+printStep('3 - Logistic Regression Model with Resampled Training Data','3.2 - Train a Logistic Regression Model using the resampled data')
 
 # %%
 # 
@@ -313,7 +313,7 @@ printSeparator()
 # * Print the classification report.
 
 # %%
-printStep('3','3.3')
+printStep('3 - Logistic Regression Model with Resampled Training Data','3.3 - Calculate, Generate, Print metrics for the model')
 
 # %%
 # 
@@ -348,7 +348,7 @@ printSeparator()
 # **Answer:** `The logistic regression model predicts the oversampled data with near-perfect accuracy (>99% accurate)`
 
 # %%
-printStep('3','3.4')
+printStep('3 - Logistic Regression Model with Resampled Training Data','3.4 - Qualify the Model ')
 print('The logistic regression model predicts the oversampled data with near-perfect accuracy (>99% accurate)')
 printSeparator()
 
