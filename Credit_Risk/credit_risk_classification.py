@@ -21,8 +21,10 @@ from   collections             import Counter                 as ctr
 #
 # Auxiliary functions
 #
+
+w, h = shu.get_terminal_size()
+
 def printSeparator():
-    w, h = shu.get_terminal_size()
     print(fr.GREEN + '-' * w + fr.WHITE)
     
 def printStep(stepA, stepB):
@@ -63,6 +65,10 @@ def printBAS(basName):
 # Step 1.1: Read the `lending_data.csv` data from the `Resources` folder into a Pandas DataFrame.
 
 # %%
+#
+# Print program steps
+#
+
 printStep('1 - Preparation','1.1 - Read CSV file, create DF and show head'                                          )
 
 # %%
@@ -75,13 +81,17 @@ df_lending = pd.read_csv(pt('../Resources/lending_data.csv'))
 #
 # Review the DataFrame
 #
-printDFinfo('df_lending',df_lending)
 
+printDFinfo('df_lending',df_lending)
 
 # %% [markdown]
 # Step 1.2: Create the labels set (`y`)  from the “loan_status” column, and then create the features (`X`) DataFrame from the remaining columns.
 
 # %%
+#
+# Print program steps
+#
+
 printStep('1 - Preparation','1.2 - Create labels X and y')
 
 # %%
@@ -110,18 +120,24 @@ printDFinfo('y',y)
 #
 # Review the X variable DataFrame
 #
+
 printDFinfo('X',X)
 
 # %% [markdown]
 # Step 1.3: Check the balance of the labels variable (`y`) by using the `value_counts` function.
 
 # %%
+#
+# Print program steps
+#
+
 printStep('1 - Preparation','1.3 - Check Balance of y')
 
 # %%
 #
 # Check the balance of our target values
 #
+
 printSeparator()
 print('total count:',fr.RED,y.count(),fr.WHITE)
 print('Count by  0:',fr.RED,y.value_counts()[0],fr.WHITE)
@@ -133,6 +149,10 @@ printSeparator()
 # Step 1.4: Split the data into training and testing datasets by using `train_test_split`.
 
 # %%
+#
+# Print program steps
+#
+
 printStep('1 - Preparation ','1.4 - Train Test Split')
 
 # %%
@@ -155,6 +175,10 @@ printSeparator()
 # Step 2. Create a Logistic Regression Model with the Original Data
 
 # %%
+#
+# Print program steps
+#
+
 printStep('2 - Logistic Regression','2.1 - Create the Logistic Regression Model')
 
 # %% [markdown]
@@ -179,6 +203,10 @@ lr_model                  = logistic_regression_model.fit(X_train, y_train)
 # Step 2.2: Save the predictions on the testing data labels by using the testing feature data (`X_test`) and the fitted model.
 
 # %%
+#
+# Print program steps
+#
+
 printStep('2 - Logistic Regression','2.2 - Make Predictions using the Testing Data')
 
 # %%
@@ -200,12 +228,17 @@ printDFinfo('df_test_predictions',df_test_predictions)
 # * Print the classification report.
 
 # %%
+#
+# Print program steps
+#
+
 printStep('2 - Logistic Regression','2.3 Calculate, Generate, Print metrics for the model')
 
 # %%
 #
 # Print the balanced_accuracy score of the model
 #
+
 printBAS(bas(y_test, test_predictions))
 
 
@@ -237,6 +270,10 @@ printReport(testing_report)
 # **Answer:** `The logistic regression model was 95% accurate at predicting the healthy vs high-risk loan labels`
 
 # %%
+#
+# Question answer
+#
+
 printStep('2 - Logistic Regression','2.4 - Qualify the Model')
 print('The logistic regression model was'+ fr.RED +' 95% ' + fr.WHITE +'accurate at predicting the healthy vs high-risk loan labels')
 printSeparator()
@@ -249,6 +286,10 @@ printSeparator()
 # Step 3.1: Use the `RandomOverSampler` module from the imbalanced-learn library to resample the data. Be sure to confirm that the labels have an equal number of data points. 
 
 # %%
+#
+# Print program steps
+#
+
 printStep('3 - Logistic Regression Model with Resampled Training Data','3.1 - Resample the training data with the RandomOversampler')
 
 # %%
@@ -277,11 +318,17 @@ printSeparator()
 print('X_ros_model ',ctr(X_ros_model))
 print('y_ros_model ',ctr(y_ros_model))
 printSeparator()
+X_ros_model.info
+y_ros_model.info
 
 # %% [markdown]
 # Step 3.2: Use the `LogisticRegression` classifier and the resampled data to fit the model and make predictions.
 
 # %%
+#
+# Print program steps
+#
+
 printStep('3 - Logistic Regression Model with Resampled Training Data','3.2 - Train a Logistic Regression Model using the resampled data')
 
 # %%
@@ -316,6 +363,10 @@ printDFinfo('df_predictions',df_predictions)
 # * Print the classification report.
 
 # %%
+#
+# Print program steps
+#
+
 printStep('3 - Logistic Regression Model with Resampled Training Data','3.3 - Calculate, Generate, Print metrics for the model')
 
 # %%
@@ -326,7 +377,9 @@ printStep('3 - Logistic Regression Model with Resampled Training Data','3.3 - Ca
 printBAS(bas(y_ros_model, predictions))
 
 # %%
+#
 # Generate a confusion matrix for the model
+#
 cf_matrix = cmx(y_ros_model, predictions)
 printSeparator()
 print('CF Matrix :',fr.RED)
@@ -334,10 +387,12 @@ print(cf_matrix)
 printSeparator()
 
 # %%
+#
 # Print the classification report for the model
+#
+
 report = csr(y_ros_model, predictions)
 printReport(report)
-
 
 # %% [markdown]
 # Step 3.4: Answer the following question
@@ -348,6 +403,10 @@ printReport(report)
 # **Answer:** `The logistic regression model predicts the oversampled data with near-perfect accuracy (>99% accurate)`
 
 # %%
+#
+# Question 2 answer
+#
+
 printStep('3 - Logistic Regression Model with Resampled Training Data','3.4 - Qualify the Model ')
 print('The logistic regression model predicts the oversampled data with near-perfect accuracy (>99% accurate)')
 printSeparator()
