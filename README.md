@@ -106,7 +106,7 @@ Using bulleted lists, describe the balanced accuracy scores and the precision an
 Summarize the results of the machine learning models, and include a recommendation on the model to use, if any. For example:
 
 * Which one seems to perform best? How do you know it performs best?
-  The second model demonstrates better indexes, but by a very small margin.**
+  The second model demonstrates better indexes, but by a very small margin.
 * Does performance depend on the problem we are trying to solve? (For example, is it more important  to predict the `1`'s, or predict the `0`'s? )
   Performance, understood as how accurate the prediction is, does not depend on what state it is trying to predict, but more important than that is the amount of information: the more input information the better the model would behave.
 
